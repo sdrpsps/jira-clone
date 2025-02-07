@@ -1,45 +1,61 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { z } from "zod";
-import DottedSeparator from "../common/dotted-separator";
-import { Button } from "../ui/button";
+import DottedSeparator from "@/components/common/dotted-separator";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { z } from "zod";
+import { useRegister } from "../api/use-register";
+import { registerSchema } from "../schemas";
 
-const formSchema = z.object({
-  email: z.string().trim().email(),
-  password: z.string().min(1, "Required"),
-});
+const SignUpCard = () => {
+  const { mutate } = useRegister();
 
-const SignInCard = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.infer<typeof registerSchema>>({
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    mutate(values);
   };
 
   return (
     <Card className="w-full h-full md:w-[487px]">
       <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">Welcome back</CardTitle>
+        <CardTitle className="text-2xl">Sign Up</CardTitle>
+        <CardDescription>
+          By signing up, you agree our{" "}
+          <Link href="/privacy">
+            <span className="text-blue-700">Privacy Policy</span>
+          </Link>{" "}
+          and{" "}
+          <Link href="/terms">
+            <span className="text-blue-700">Terms of Service</span>
+          </Link>
+        </CardDescription>
       </CardHeader>
       <div className="px-7 mb-2">
         <DottedSeparator />
@@ -47,6 +63,18 @@ const SignInCard = () => {
       <CardContent className="p-7">
         <Form {...form}>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              name="name"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input {...field} placeholder="Enter your name" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               name="email"
               control={form.control}
@@ -80,7 +108,7 @@ const SignInCard = () => {
               )}
             />
             <Button className="w-full" size="lg" disabled={false}>
-              Login
+              Register
             </Button>
           </form>
         </Form>
@@ -112,13 +140,13 @@ const SignInCard = () => {
         <DottedSeparator />
       </div>
       <CardContent className="p-7 flex items-center justify-center">
-        Don&apos;t have an account?
-        <Link href="/sign-up">
-          <span className="text-blue-700">&nbsp;Sign Up</span>
+        Already have an account?
+        <Link href="/sign-in">
+          <span className="text-blue-700">&nbsp;Sign In</span>
         </Link>
       </CardContent>
     </Card>
   );
 };
 
-export default SignInCard;
+export default SignUpCard;
