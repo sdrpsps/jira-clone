@@ -27,7 +27,7 @@ import { useRegister } from "../api/use-register";
 import { registerSchema } from "../schemas";
 
 const SignUpCard = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     defaultValues: {
@@ -107,7 +107,7 @@ const SignUpCard = () => {
                 </FormItem>
               )}
             />
-            <Button className="w-full" size="lg" disabled={false}>
+            <Button className="w-full" size="lg" disabled={isPending}>
               Register
             </Button>
           </form>
@@ -121,7 +121,7 @@ const SignUpCard = () => {
           className="w-full"
           variant="secondary"
           size="lg"
-          disabled={false}
+          disabled={isPending}
         >
           <FcGoogle className="size-5" />
           Login with Google
@@ -130,7 +130,7 @@ const SignUpCard = () => {
           className="w-full"
           variant="secondary"
           size="lg"
-          disabled={false}
+          disabled={isPending}
         >
           <FaGithub className="size-5" />
           Login with Github
