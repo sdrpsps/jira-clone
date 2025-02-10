@@ -12,11 +12,7 @@ import { RiAddCircleFill } from "react-icons/ri";
 import WorkspaceAvatar from "./workspace-avatar";
 
 const WorkspaceSwitcher = () => {
-  const { data: workspaces, isLoading } = useGetWorkspaces();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const { data: workspaces } = useGetWorkspaces();
 
   return (
     <div className="flex flex-col gap-y-2">
@@ -29,7 +25,7 @@ const WorkspaceSwitcher = () => {
           <SelectValue placeholder="No workspace selected" />
         </SelectTrigger>
         <SelectContent>
-          {workspaces?.documents.map((workspace) => (
+          {workspaces?.documents?.map((workspace) => (
             <SelectItem key={workspace.$id} value={workspace.$id}>
               <div className="flex justify-start items-center gap-3 font-medium">
                 <WorkspaceAvatar
