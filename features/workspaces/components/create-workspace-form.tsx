@@ -21,12 +21,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useCreateWorkspace } from "../api/use-create-wordspace";
 import { createWorkspaceSchema } from "../schemas";
+import { useRouter } from "next/navigation";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;
 }
 
 const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
+  const router = useRouter();
   const { mutate, isPending } = useCreateWorkspace();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -51,9 +53,9 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
         image: values.image instanceof File ? values.image : "",
       },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           form.reset();
-          // TODO: redirect to the workspace
+          router.push(`/workspaces/${data.$id}`);
         },
       }
     );
