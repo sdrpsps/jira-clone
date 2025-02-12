@@ -13,7 +13,7 @@ import {
 } from "react-icons/go";
 
 const routes = [
-  { label: "Home", href: "/", icon: GoHome, activeIcon: GoHomeFill },
+  { label: "Home", href: "", icon: GoHome, activeIcon: GoHomeFill },
   {
     label: "My Tasks",
     href: "/tasks",
