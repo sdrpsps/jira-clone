@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DottedSeparator from "./common/dotted-separator";
 import Navigation from "./navigation";
+import Projects from "./projects";
 
 const Sidebar = () => {
   return (
@@ -16,6 +17,8 @@ const Sidebar = () => {
       <WorkspaceSwitcher />
       <DottedSeparator className="py-4" />
       <Navigation />
+      <DottedSeparator className="py-4" />
+      <Projects />
     </aside>
   );
 };
