@@ -14,7 +14,6 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useConfirm } from "@/hooks/use-confirm";
 import { ArrowLeftIcon, ChevronDownIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Fragment } from "react";
 import { useDeleteMember } from "../api/use-delete-member";
 import { useGetMembers } from "../api/use-get-members";
@@ -23,7 +22,6 @@ import { MemberRole } from "../types";
 import MemberAvatar from "./member-avatar";
 
 const MemberList = () => {
-  const router = useRouter();
   const workspaceId = useWorkspaceId();
   const { data } = useGetMembers({ workspaceId });
   const { mutate: updateMember, isPending: isUpdating } = useUpdateMember();
@@ -44,28 +42,14 @@ const MemberList = () => {
     const ok = await confirmUpdate();
     if (!ok) return;
 
-    updateMember(
-      { json: { role }, param: { memberId } },
-      {
-        onSuccess: () => {
-          router.refresh();
-        },
-      }
-    );
+    updateMember({ json: { role }, param: { memberId } });
   };
 
   const handleDeleteMember = async (memberId: string) => {
     const ok = await confirmRemove();
     if (!ok) return;
 
-    deleteMember(
-      { param: { memberId } },
-      {
-        onSuccess: () => {
-          router.refresh();
-        },
-      }
-    );
+    deleteMember({ param: { memberId } });
   };
 
   return (

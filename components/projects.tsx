@@ -13,7 +13,6 @@ const Projects = () => {
   const pathname = usePathname();
   const { open } = useCreateProjectModal();
   const workspaceId = useWorkspaceId();
-  const projectId = null; // TODO: useProjectId
   const { data: projects } = useGetProjects({
     workspaceId,
   });
@@ -28,7 +27,7 @@ const Projects = () => {
         />
       </div>
       {projects?.documents.map((project) => {
-        const href = `/workspaces/${workspaceId}/projects/${projectId}`;
+        const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
         const isActive = pathname === href;
 
         return (

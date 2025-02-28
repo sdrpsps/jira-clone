@@ -16,8 +16,6 @@ const WorkspaceIdSettingPage = async ({
   const { workspaceId } = await params;
   const workspace = await getWorkspace({ workspaceId });
 
-  if (!workspace) redirect(`/workspaces/${workspaceId}`);
-
   return (
     <div className="w-full lg:max-w-xl">
       <UpdateWorkspaceForm initialValues={workspace} />
