@@ -12,6 +12,7 @@ import DataFilters from "./data-filters";
 import { useTaskFilters } from "../hooks/use-task-filters";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import DataKanban from "./data-kanban";
 
 const TaskViewSwitcher = () => {
   const [view, setView] = useQueryState("task-view", {
@@ -48,7 +49,7 @@ const TaskViewSwitcher = () => {
               Calendar
             </TabsTrigger>
           </TabsList>
-          <Button size="sm" className="w-full lg:w-auto" onClick={open}>
+          <Button size="sm" className="w-full lg:w-auto" onClick={() => open()}>
             <PlusIcon className="size-4 w-full lg:w-auto" />
             New
           </Button>
@@ -66,7 +67,7 @@ const TaskViewSwitcher = () => {
               <DataTable columns={columns} data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="kanban" className="mt-0">
-              Kanban
+              <DataKanban data={tasks?.documents ?? []} />
             </TabsContent>
             <TabsContent value="calendar" className="mt-0">
               Calendar

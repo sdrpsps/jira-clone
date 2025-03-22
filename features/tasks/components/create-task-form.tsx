@@ -33,12 +33,14 @@ import ProjectAvatar from "@/features/projects/components/project-avatar";
 
 interface CreateTaskFormProps {
   onCancel?: () => void;
+  initialStatus: TaskStatus | null;
   projectOptions: { id: string; name: string; imageUrl: string }[];
   memberOptions: { id: string; name: string }[];
 }
 
 const CreateTaskForm = ({
   onCancel,
+  initialStatus,
   projectOptions,
   memberOptions,
 }: CreateTaskFormProps) => {
@@ -50,6 +52,7 @@ const CreateTaskForm = ({
     defaultValues: {
       name: "",
       workspaceId,
+      status: initialStatus ?? undefined,
     },
   });
 
