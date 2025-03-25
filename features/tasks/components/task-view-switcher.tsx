@@ -17,6 +17,7 @@ import { DataTable } from "./data-table";
 import { TaskStatus } from "../types";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
 import DataCalendar from "./data-calendar";
+import { useProjectId } from "@/features/projects/hooks/use-project-id";
 
 interface TaskViewSwitcherProps {
   hideProjectFilter?: boolean;
@@ -27,12 +28,15 @@ const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) => {
     defaultValue: "table",
   });
   const { open } = useCreateTaskModal();
-  const [{ status, assigneeId, projectId, dueDate }] = useTaskFilters();
+  const [{ status, assigneeId, projectId: filterProjectId, dueDate }] =
+    useTaskFilters();
 
   const workspaceId = useWorkspaceId();
+  const projectId = useProjectId();
+
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
-    projectId,
+    projectId: hideProjectFilter ? projectId : filterProjectId,
     assigneeId,
     status,
     dueDate,
