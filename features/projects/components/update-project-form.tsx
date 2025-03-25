@@ -79,21 +79,13 @@ const UpdateProjectForm = ({
   };
 
   const onSubmit = (values: z.infer<typeof updateProjectSchema>) => {
-    mutate(
-      {
-        form: {
-          ...values,
-          image:
-            values.image instanceof File ? values.image : values.image || "",
-        },
-        param: { projectId: initialValues.$id },
+    mutate({
+      form: {
+        ...values,
+        image: values.image instanceof File ? values.image : values.image || "",
       },
-      {
-        onSuccess: () => {
-          form.reset();
-        },
-      }
-    );
+      param: { projectId: initialValues.$id },
+    });
   };
 
   return (

@@ -106,21 +106,13 @@ const UpdateWorkspaceForm = ({
   };
 
   const onSubmit = (values: z.infer<typeof updateWorkspaceSchema>) => {
-    mutate(
-      {
-        form: {
-          ...values,
-          image:
-            values.image instanceof File ? values.image : values.image || "",
-        },
-        param: { workspaceId: initialValues.$id },
+    mutate({
+      form: {
+        ...values,
+        image: values.image instanceof File ? values.image : values.image || "",
       },
-      {
-        onSuccess: () => {
-          form.reset();
-        },
-      }
-    );
+      param: { workspaceId: initialValues.$id },
+    });
   };
 
   return (
