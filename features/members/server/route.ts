@@ -35,7 +35,7 @@ const app = new Hono()
       }
 
       const members: Models.DocumentList<Member> =
-        await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
+        await databases.listDocuments<Member>(DATABASE_ID, MEMBERS_ID, [
           Query.equal("workspaceId", workspaceId),
         ]);
 
